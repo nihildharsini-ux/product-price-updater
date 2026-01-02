@@ -1,0 +1,34 @@
+package productprice;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class productprice {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/productprice","root","nihil0909");
+		Scanner sc=new Scanner(System.in);
+		System.out.println("enter product id:");
+		int id=sc.nextInt();
+		System.out.println("enter new price:");
+		double price=sc.nextDouble();
+		String  query="UPDATE products SET price = ? WHERE id= ?";
+		PreparedStatement ps=con.prepareStatement(query);
+		ps.setDouble(1, price);
+		ps.setInt(2, id);
+		int row=ps.executeUpdate();
+		if(row>0) {
+			System.out.println("product price updated succesfully.");
+		}else {
+			System.out.println("product Id not found.");
+			
+			
+		}
+		
+
+	}
+}
